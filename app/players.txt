@@ -1,4 +1,12 @@
 # Create your players below:
-XXX1
-XXX2
-XXX3
+Papa
+Anton
+Yago
+Quico
+Manu
+Javi
+Guzman
+Julio
+Julito
+Ricky
+Charlie
