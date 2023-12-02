@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   mysql:
-    container_name: mysql-anton
+    container_name: mysql-XXX
     image: mysql
     restart: always
     build: ./mysql
@@ -30,7 +30,7 @@ services:
 
   # Flask App
   app:
-    container_name: webapp-anton
+    container_name: webapp-XXX
     build: ./app  
     ports:
       - "5000:5000"  # Expose Flask app on port 5000
