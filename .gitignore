@@ -1,0 +1,11 @@
+/myenv
+.python-version
+__pycache__/
+index.log
+python_index.log
+secrets/
+app/.env
+mysql/data
+mysql/logs
+app/logs
+
