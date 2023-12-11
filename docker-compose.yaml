@@ -32,8 +32,9 @@ services:
   app:
     container_name: webapp-anton
     build: ./app  
+    restart: always
     ports:
-      - "5000:5000"  # Expose Flask app on port 5000
+      - "5004:5004"  # Expose Flask app on port 5004
     env_file:
       - ./app/.env
     volumes:
@@ -43,14 +44,11 @@ services:
       - mysql-user-password
       - mysql-database
       - secret-key
-      - TOKEN
     depends_on:
       mysql:
         condition: service_healthy
 
 secrets:
-  TOKEN:
-    file: ./secrets/token
   mysql-user:
     file: ./secrets/mysql-user
   mysql-root-password:

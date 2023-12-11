@@ -14,4 +14,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # Command to run your Flask app
-CMD sh -c "python populate_db.py; gunicorn --bind 0.0.0.0:5000 wsgi:app -c gunicorn.conf.py"
+CMD sh -c "python populate_db.py; gunicorn --bind 0.0.0.0:5004 wsgi:app -c gunicorn.conf.py"
