@@ -1,34 +1,6 @@
 version: '3.9'
 
 services:
-  mysql:
-    container_name: mysql-anton
-    image: mysql
-    restart: always
-    build: ./mysql
-    environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root-password
-      MYSQL_USER_FILE: /run/secrets/mysql-user
-      MYSQL_PASSWORD_FILE: /run/secrets/mysql-user-password
-      MYSQL_DATABASE_FILE: /run/secrets/mysql-database
-    volumes:
-      - ./mysql/data:/var/lib/mysql
-      - ./mysql/logs:/var/log/mysql
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
-    expose:
-      - "3306"
-    secrets:
-      - mysql-root-password
-      - mysql-user
-      - mysql-user-password
-      - mysql-database
-    healthcheck:
-      test: mysql --user=$$(cat $$MYSQL_USER_FILE) --password=$$(cat $$MYSQL_PASSWORD_FILE) --execute "use $$(cat $$MYSQL_DATABASE_FILE);"
-      interval: 2s
-      timeout: 20s
-      retries: 20
-
-  # Flask App
   app:
     container_name: webapp-anton
     build: ./app  
@@ -37,6 +9,8 @@ services:
       - "5004:5004"  # Expose Flask app on port 5004
     env_file:
       - ./app/.env
+    environment:
+      - TZ=Europe/Madrid
     volumes:
       - ./app/logs:/home/logs
     secrets:
@@ -44,15 +18,17 @@ services:
       - mysql-user-password
       - mysql-database
       - secret-key
-    depends_on:
-      mysql:
-        condition: service_healthy
+    networks:
+      - apps-network
+
+networks:
+  apps-network:
+    external: true
+    name: webapps_network 
 
 secrets:
   mysql-user:
     file: ./secrets/mysql-user
-  mysql-root-password:
-    file: ./secrets/mysql-root-password
   mysql-user-password:
     file: ./secrets/mysql-user-password
   mysql-database:
