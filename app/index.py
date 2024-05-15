@@ -34,9 +34,9 @@ pwd = get_docker_secrets("mysql-user-password")
 ip = os.environ.get("IP")
 port = os.environ.get("PORT")
 db_name = get_docker_secrets("mysql-database")
-app.config[
-    "SQLALCHEMY_DATABASE_URI"
-] = f"{sql_drivers}://{user}:{pwd}@{ip}:{port}/{db_name}"
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    f"{sql_drivers}://{user}:{pwd}@{ip}:{port}/{db_name}"
+)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 db.init_app(app)
 
@@ -67,7 +67,13 @@ NAVIGATION_BAR = Markup(
 )
 
 # dict to map names to classes:
-TABLES = {c.__name__: c for c in (Season_0, Games_history_0)}
+TABLES = {
+    c.__name__: c
+    for c in (
+        Season_0,
+        Games_history_0,
+    )
+}
 
 
 def read_scores(season):
