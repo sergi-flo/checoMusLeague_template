@@ -57,7 +57,6 @@ NAVIGATION_BAR = Markup(
         <li class="dropdown">
             <a href="javascript:void(0)" class="dropbtn">Seleccionar temporada</a>
             <div class="dropdown-content">
-                <a href="/{TOKEN}/select_season?season=0">Temporada 1</a>
             </div>
         </li>
         <li><a href="/{TOKEN}">Clasificación</a></li>
