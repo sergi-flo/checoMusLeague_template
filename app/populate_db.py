@@ -21,6 +21,15 @@ if "__main__" == __name__:
     cursor = conn.cursor()
     cursor.execute(f"USE {database_name}")
     try:
+        # create and populate the table users for the webpage
+        cursor.execute(""" CREATE TABLE season_0(id INT AUTO_INCREMENT PRIMARY KEY,
+                                            name VARCHAR(255) UNIQUE NOT NULL,
+                                            score FLOAT,
+                                            wins INT,
+                                            losses INT,
+                                            total INT
+                                            );""")
+
         query_users = """INSERT INTO season_0 (name, score, wins, losses, total) 
         VALUES (%s, %s, %s, %s, %s)"""
 
@@ -32,6 +41,27 @@ if "__main__" == __name__:
                 player = (player_name.rstrip().lower(), 1000, 0, 0, 0)
                 cursor.execute(query_users, player)
             print("Data inserted into season_0 table successfully.")
+
+        # create and populate the table users for the webpage
+        cursor.execute(""" CREATE TABLE games_history_0(id INT AUTO_INCREMENT PRIMARY KEY,
+                                            timestamp DATETIME,
+                                            winner1 VARCHAR(255),
+                                            winner1_percentage FLOAT,
+                                            winner1_old_elo FLOAT,
+                                            winner1_new_elo FLOAT,
+                                            winner2 VARCHAR(255),
+                                            winner2_percentage FLOAT,
+                                            winner2_old_elo FLOAT,
+                                            winner2_new_elo FLOAT,
+                                            loser1 VARCHAR(255),
+                                            loser1_percentage FLOAT,
+                                            loser1_old_elo FLOAT,
+                                            loser1_new_elo FLOAT,
+                                            loser2 VARCHAR(255),
+                                            loser2_percentage FLOAT,
+                                            loser2_old_elo FLOAT,
+                                            loser2_new_elo FLOAT
+                                            );""")
     except Exception:
         print("Tables already created!! Skipping...")
     finally:
