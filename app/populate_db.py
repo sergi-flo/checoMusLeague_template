@@ -19,10 +19,10 @@ if "__main__" == __name__:
         port=int(os.environ.get("PORT")),
     )
     cursor = conn.cursor()
-    cursor.execute(f"USE {database_name}")
+    cursor.execute(f"USE {database_name};")
     try:
         # create and populate the table users for the webpage
-        cursor.execute(""" CREATE TABLE season_0(id INT AUTO_INCREMENT PRIMARY KEY,
+        cursor.execute("""CREATE TABLE season_0(id INT AUTO_INCREMENT PRIMARY KEY,
                                             name VARCHAR(255) UNIQUE NOT NULL,
                                             score FLOAT,
                                             wins INT,
@@ -31,19 +31,17 @@ if "__main__" == __name__:
                                             );""")
 
         query_users = """INSERT INTO season_0 (name, score, wins, losses, total) 
-        VALUES (%s, %s, %s, %s, %s)"""
+        VALUES (%s, %s, %s, %s, %s);"""
 
         with open("players.txt", "r") as players_file:
             players = players_file.readlines()
             for player_name in players:
-                if player_name.startswith("#"):
-                    continue
                 player = (player_name.rstrip().lower(), 1000, 0, 0, 0)
                 cursor.execute(query_users, player)
             print("Data inserted into season_0 table successfully.")
 
         # create and populate the table users for the webpage
-        cursor.execute(""" CREATE TABLE games_history_0(id INT AUTO_INCREMENT PRIMARY KEY,
+        cursor.execute("""CREATE TABLE games_history_0(id INT AUTO_INCREMENT PRIMARY KEY,
                                             timestamp DATETIME,
                                             winner1 VARCHAR(255),
                                             winner1_percentage FLOAT,
@@ -62,7 +60,7 @@ if "__main__" == __name__:
                                             loser2_old_elo FLOAT,
                                             loser2_new_elo FLOAT
                                             );""")
-    except Exception:
+    except:
         print("Tables already created!! Skipping...")
     finally:
         conn.commit()
